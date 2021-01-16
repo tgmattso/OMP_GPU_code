@@ -39,7 +39,7 @@ void mm_ijk (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
 void mm_ikj (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
-void mm_trans(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
+void mm_gpu(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
 void mm_ikj_par (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
@@ -81,10 +81,11 @@ int main(int argc, char **argv)
 
    printf("\n==================================================\n");
    printf(" triple loop, ikj par case %d %d %d\n", Ndim, Mdim, Pdim);
+   printf(" OMP MAX NUM THREADS = %d\n",omp_get_max_threads());
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_ikj_par);
 
    printf("\n==================================================\n");
-   printf(" transpose B case %d %d %d\n", Ndim, Mdim, Pdim);
-   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_trans);
+   printf(" ijk on a GPU  %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu);
 
 }
