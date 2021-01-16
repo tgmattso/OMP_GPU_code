@@ -1,19 +1,17 @@
 # for AMD AOMP compiler on linux
 # copy to make.def
-# AOMP v11.12-0 does not like .o files, so we just build as .c
-#
-#  qsub -I -lselect=1:ngpus=1:gputype=radeonvii -lwalltime=03:00:00
-#  module load aomp/11.
-
 CC         = aompcc
+INSTALLED_GPU  = $(shell $(dir $(shell which $(CC)))mygpu -d gfx906)
+UNAME = $(shell uname -m)
 CPP         = $(CC)
 OPTFLAGS   = -O3 -fopenmp
 
-CLINKER     = $(CC)
-LIBS        = 
+CLINKER     = $(dir $(shell which $(CC)))clang
+LIBS        = -O3 -target $(UNAME)-pc-linux-gnu -fopenmp -fopenmp-targets=amdgcn-amd-amdhsa -Xopenmp-target=amdgcn-amd-amdhsa -march=$(INSTALLED_GPU)
 
 CFLAGS    = $(OPTFLAGS)
 PRE= ./
 OBJ=o
 EXE=
-RM=rm
+RM=rm -f
+
