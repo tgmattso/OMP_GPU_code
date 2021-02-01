@@ -37,10 +37,10 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
  for (int ib=0; ib < Nblk; ib++){ /* Loop over blocks of C. One team per block */
     for (int jb=0; jb < Mblk; jb++){
 
-      for (int kb=0; kb<Pblk; kb++){
 
 #pragma omp parallel num_threads(Bsize*Bsize)
 {
+      for (int kb=0; kb<Pblk; kb++){
         /* Copy block of A into pteam memory */
         #pragma omp for collapse(2) nowait schedule(static, 1)
         for (int i=ib*Bsize; i<((ib+1)*Bsize); i++){
