@@ -28,7 +28,7 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
   TYPE Bwrk[Bsize*Bsize];
 
  #pragma omp target map(tofrom:C[0:Ndim*Mdim]) map(to:B[0:Pdim*Mdim],A[0:Ndim*Pdim])
- #pragma omp teams distribute collapse(2) num_teams(Nblk*Mblk) allocate(omp_pteam_mem_alloc: Awrk, Bwrk) private(Awrk, Bwrk)
+ #pragma omp teams distribute collapse(2) num_teams(Nblk*Mblk) allocate(omp_pteam_mem_alloc: Awrk, Bwrk) private(Awrk, Bwrk) thread_limit(Bsize*Bsize)
  for (ib=0; ib < Nblk; ib++){ /* Loop over blocks of C. One team per block */
     for (jb=0; jb < Mblk; jb++){
 
