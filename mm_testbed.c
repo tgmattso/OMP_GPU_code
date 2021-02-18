@@ -95,5 +95,8 @@ int main(int argc, char **argv)
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block);
 
    printf("\n==================================================\n");
+   printf(" blocked ijk on a GPU with allocate directive %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block_allocate);
+   printf("\n==================================================\n");
 
 }

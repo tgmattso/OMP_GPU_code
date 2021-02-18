@@ -10,7 +10,7 @@
 
 #define Bsize 8
 
-void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
+void mm_gpu_block_allocate(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
   //int i, j, k;
   //int ib, jb, kb;
 
