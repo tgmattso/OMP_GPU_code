@@ -33,7 +33,7 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
   TYPE Bwrk[Bsize*Bsize];
 #pragma omp allocate(Awrk, Bwrk) allocator(omp_pteam_mem_alloc)
 
-#pragma omp distribute collapse(2) dist_schedule(static, 1)
+#pragma omp distribute collapse(2)
  for (int ib=0; ib < Nblk; ib++){ /* Loop over blocks of C. One team per block */
     for (int jb=0; jb < Mblk; jb++){
 
@@ -42,7 +42,7 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
 {
       for (int kb=0; kb<Pblk; kb++){
         /* Copy block of A into pteam memory */
-        #pragma omp for collapse(2) nowait schedule(static, 1)
+        #pragma omp for collapse(2) nowait
         for (int i=ib*Bsize; i<((ib+1)*Bsize); i++){
           for(int k=kb*Bsize; k<((kb+1)*Bsize); k++){
             Awrk[(i%Bsize)*Bsize + (k%Bsize)] = A[i*Pdim+k];
@@ -50,7 +50,7 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
         }
 
         /* Copy block of B into pteam memory */
-        #pragma omp for collapse(2) schedule(static, 1)
+        #pragma omp for collapse(2)
         for (int j=jb*Bsize; j<((jb+1)*Bsize); j++){
           for(int k=kb*Bsize; k<((kb+1)*Bsize); k++){
             Bwrk[(k%Bsize)*Bsize + (j%Bsize)] = B[k*Mdim+j];
@@ -59,7 +59,7 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
 
 
         /* matrix multiply block */
-        #pragma omp for collapse(2) schedule(static, 1)
+        #pragma omp for collapse(2)
         for (int i=ib*Bsize; i<((ib+1)*Bsize); i++){
           for (int j=jb*Bsize; j<((jb+1)*Bsize); j++){
             /*for(k=kb*Bsize; k<((kb+1)*Bsize); k++){*/
