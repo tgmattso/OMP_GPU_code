@@ -9,7 +9,8 @@ EXES= mm_testbed$(EXE)
 
 MM_OBJS  = mm_testbed.$(OBJ) mm_utils.$(OBJ) mm_tst_cases.$(OBJ) \
            mm_ijk.$(OBJ) mm_ikj.$(OBJ) mm_ikj_par.$(OBJ) \
-	   mm_gpu.$(OBJ) mm_trans.$(OBJ)
+	   mm_gpu.$(OBJ) mm_trans.$(OBJ) mm_gpu_block.$(OBJ) \
+           mm_gpu_block_allocate_directive.$(OBJ)
 
 all: $(EXES)
 

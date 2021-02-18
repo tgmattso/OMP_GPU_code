@@ -43,6 +43,10 @@ void mm_gpu(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
 void mm_ikj_par (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
+void mm_gpu_block (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
+
+void mm_gpu_block_allocate (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
+
 int main(int argc, char **argv)
 {
    int Ndim, Mdim, Pdim;   /* A[N][P], B[P][M], C[N][M] */
@@ -87,5 +91,15 @@ int main(int argc, char **argv)
    printf("\n==================================================\n");
    printf(" ijk on a GPU  %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu);
+
+   printf("\n==================================================\n");
+   printf(" blocked ijk on a GPU with allocate directive %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block_allocate);
+
+   printf("\n==================================================\n");
+   printf(" blocked ijk on a GPU with allocate clause %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block);
+
+   printf("\n==================================================\n");
 
 }
