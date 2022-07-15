@@ -96,6 +96,7 @@ int main(int argc, char **argv)
    printf(" ijk on a GPU  %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu);
 
+   #ifdef USE_ALLOCATE
    printf("\n==================================================\n");
    printf(" blocked ijk on a GPU with allocate directive %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block_allocate);
@@ -103,6 +104,7 @@ int main(int argc, char **argv)
    printf("\n==================================================\n");
    printf(" blocked ijk on a GPU with allocate clause %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block);
+   #endif
 
    #ifdef USE_CUBLAS
    printf("\n==================================================\n");

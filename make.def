@@ -1,18 +1,14 @@
-# for intel compiler on linux 
+# for llvm/clang compiler on linux 
 #
-#  Remember that before using this make.def, you need:
+#  Remember that before using this make.def, you need to set the -march=sm_?? flag below
 #
-# source /nfs/software/x86_64/inteloneapi-beta/2021.1.8/setvars.sh
-# module load intel/neo
-#
-# https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-cpp-fortran-compiler-openmp/top.html
 # copy to make.def
-CC         = icx
-CPP         = $(CC)
-OPTFLAGS   = -O3 -fiopenmp -fopenmp-targets=spir64
+CC = nvc
+CPP = nvc++
+OPTFLAGS = -O3 -mp=gpu -gpu=cc75 -DUSE_CUBLAS
 
 CLINKER     = $(CC)
-LIBS        = -lm
+LIBS        = -lm -L/nfs/software/x86_64/nvidia/hpc_sdk/22.5/Linux_x86_64/22.5/cuda/lib64/ -lcudart -lcublas
 
 CFLAGS    = $(OPTFLAGS)
 PRE= ./

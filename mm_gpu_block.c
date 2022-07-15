@@ -8,6 +8,8 @@
 
 #include <assert.h>
 
+#ifdef USE_ALLOCATE
+
 void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
   int i, j, k;
   const int Bsize = 8;
@@ -69,3 +71,7 @@ void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
     }
   }
 }
+
+#else
+void mm_gpu_block(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){}
+#endif
