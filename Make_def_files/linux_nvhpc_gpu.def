@@ -1,0 +1,17 @@
+# for llvm/clang compiler on linux 
+#
+#  Remember that before using this make.def, you need to set the -march=sm_?? flag below
+#
+# copy to make.def
+CC = nvc
+CPP = nvc++
+OPTFLAGS = -O3 -mp=gpu -gpu=cc75 -DUSE_CUBLAS
+
+CLINKER     = $(CC)
+LIBS        = -lm -L/nfs/software/x86_64/nvidia/hpc_sdk/22.5/Linux_x86_64/22.5/cuda/lib64/ -lcudart -lcublas
+
+CFLAGS    = $(OPTFLAGS)
+PRE= ./
+OBJ=o
+EXE=
+RM=rm

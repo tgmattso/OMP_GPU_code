@@ -43,6 +43,10 @@ void mm_gpu(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
 void mm_ikj_par (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
+#ifdef USE_CUBLAS
+void mm_cublas (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
+#endif
+
 int main(int argc, char **argv)
 {
    int Ndim, Mdim, Pdim;   /* A[N][P], B[P][M], C[N][M] */
@@ -88,4 +92,9 @@ int main(int argc, char **argv)
    printf(" ijk on a GPU  %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu);
 
+   #ifdef USE_CUBLAS
+   printf("\n==================================================\n");
+   printf(" ijk on a GPU with cuBLAS  %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_cublas);
+   #endif
 }
