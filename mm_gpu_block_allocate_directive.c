@@ -10,6 +10,8 @@
 
 #define Bsize 8
 
+#ifdef USE_ALLOCATE
+
 void mm_gpu_block_allocate(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){
   //int i, j, k;
   //int ib, jb, kb;
@@ -76,3 +78,7 @@ void mm_gpu_block_allocate(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE 
   }
 }
 }
+
+#else
+void mm_gpu_block_allocate(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C){ }
+#endif
