@@ -43,6 +43,10 @@ void mm_gpu(int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
 void mm_ikj_par (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 
+void mm_gpu_block (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
+
+void mm_gpu_block_allocate (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
+
 #ifdef USE_CUBLAS
 void mm_cublas (int Ndim, int Mdim, int Pdim, TYPE *A, TYPE *B, TYPE *C);
 #endif
@@ -92,9 +96,19 @@ int main(int argc, char **argv)
    printf(" ijk on a GPU  %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu);
 
+   printf("\n==================================================\n");
+   printf(" blocked ijk on a GPU with allocate directive %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block_allocate);
+
+   printf("\n==================================================\n");
+   printf(" blocked ijk on a GPU with allocate clause %d %d %d\n", Ndim, Mdim, Pdim);
+   mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_gpu_block);
+
    #ifdef USE_CUBLAS
    printf("\n==================================================\n");
    printf(" ijk on a GPU with cuBLAS  %d %d %d\n", Ndim, Mdim, Pdim);
    mm_tst_cases(NTRIALS, Ndim, Mdim, Pdim, A, B, C, &mm_cublas);
    #endif
+   printf("\n==================================================\n");
+
 }
